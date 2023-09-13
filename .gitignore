@@ -1,3 +1,12 @@
 upload-ai-web/.gitignore
 upload-ai-web/package.json
 upload-ai-web/package.json
+upload-ai-web/vite.config.ts
+upload-ai-web/tsconfig.json
+upload-ai-web/src/lib/utils.ts
+upload-ai-web/vite.config.ts
+upload-ai-web/tsconfig.json
+upload-ai-web/postcss.config.js
+upload-ai-web/components.json
+upload-ai-web/pnpm-lock.yaml
+upload-ai-web/tsconfig.json
