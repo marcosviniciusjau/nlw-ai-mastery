@@ -10,3 +10,6 @@ upload-ai-web/postcss.config.js
 upload-ai-web/components.json
 upload-ai-web/pnpm-lock.yaml
 upload-ai-web/tsconfig.json
+upload-ai-web/tailwind.config.js
+upload-ai-web/tsconfig.json
+upload-ai-web/package.json
