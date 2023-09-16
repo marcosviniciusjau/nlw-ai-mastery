@@ -8,12 +8,12 @@ import { getFFmpeg } from "@/lib/ffmpeg"
 import {fetchFile} from '@ffmpeg/util'
 import {api} from '@/lib/axios';
 
-type Status= 'waiting' | 'converting' | 'uploading' | 'generating' | 'sucess'
+type Status= 'waiting' | 'converting' | 'uploading' | 'generating' | 'success'
 const statusMessages={
   converting:'Convertendo...',
   generating:'Transcrevendo...',
   uploading:'Carregando...',
-  sucess:'Sucesso!'
+  success:'Sucesso!'
 }
 
 interface VideoInputFormProps{
@@ -99,7 +99,7 @@ export function VideoInputForm(props:VideoInputFormProps){
     prompt,
   })
 
-  setStatus("sucess")
+  setStatus("success")
 
   props.onVideoUploaded(videoId)
   }
@@ -148,10 +148,10 @@ export function VideoInputForm(props:VideoInputFormProps){
         ></Textarea>
       </div>
       <Button 
-      data-sucess={status ==='sucess'}
+      data-success={status ==='success'}
       disabled={status != 'waiting'}
        type="submit" 
-       className="w-full data-[sucess=true]:bg-emerald-400"
+       className="w-full data-[success=true]:bg-emerald-400"
        >
        {status === 'waiting' ?(
         <>

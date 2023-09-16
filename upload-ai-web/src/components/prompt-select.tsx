@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { api } from "@/lib/axios";
 
-type Status = "waiting" | "converting" | "uploading" | "generating" | "sucess"
-
-
 interface Prompt{
   id:string
   title:string
@@ -14,9 +11,9 @@ interface PromptSelectProps{
   onPromptSelected: (template:string) => void
 }
 export function PromptSelect(props:PromptSelectProps){
-   const [status] = useState<Status>("waiting")
 
   const [prompts,setPrompts] = useState<Prompt[] | null>(null)
+  
   useEffect(()=>{
    api.get('/prompts').then(response=>{
     
@@ -35,7 +32,7 @@ export function PromptSelect(props:PromptSelectProps){
   }
 
   return (
-    <Select onValueChange={handlePromptSelected} disabled={status != "waiting"}>
+    <Select onValueChange={handlePromptSelected} >
       <SelectTrigger>
         <SelectValue placeholder="Selecione um prompt"></SelectValue>
       </SelectTrigger>
