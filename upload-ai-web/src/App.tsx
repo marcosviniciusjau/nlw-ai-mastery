@@ -13,10 +13,33 @@ import {
 import { Slider } from "./components/ui/slider"
 import { VideoInputForm } from "./components/video-input-form"
 import { PromptSelect } from "./components/prompt-select"
+import { useState } from "react"
+import {useCompletion} from 'ai/react'
+
 export function App() {
-  function handlePromptSelected(template:string){
-    console.log(template)
-  }
+  const [temperature,setTemperature]= useState(0.5)
+  const [videoId, setVideoId]= useState<string | null>(null)
+
+
+
+const {
+  input,
+  setInput,
+  handleInputChange,
+  handleSubmit,
+  completion,
+  isLoading,
+}= useCompletion({
+  api:'http://localhost:3333/ai/complete',
+  body:{
+    videoId,
+    temperature,
+    
+  },
+  headers:{
+    'Content-type':'application/json',
+  },
+})
   return (
     
     <div className="min-h-screen flex flex-col">
@@ -41,12 +64,15 @@ export function App() {
             <Textarea
               className="resize-none p-4 leading-relaxed"
               placeholder="Inclua o prompt para a IA..."
+              value={input}
+              onChange={handleInputChange}
             />
 
             <Textarea
               className="resize-none p-4 leading-relaxed"
               placeholder="Resultado gerado pela IA..."
               readOnly
+              value={completion}
             />
           </div>
           <p className="text-sm text-muted-foreground">
@@ -56,18 +82,19 @@ export function App() {
           </p>
         </div>
         <aside className="w-80 space-y-6">
-          <VideoInputForm/>
-         
-
+          <VideoInputForm onVideoUploaded={setVideoId}/>
+  
           <Separator />
-          <form className="space-y-6">
+
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label>Prompt</Label>
-              <PromptSelect onPromptSelected={handlePromptSelected}/>
+              <PromptSelect onPromptSelected={setInput}/>
               <span className="block text-xs text-mutted-foreground">
                 Você podera customizar essa opção em breve
               </span>
             </div>
+
             <div className="space-y-2">
               <Label>Modelo</Label>
               <Select disabled defaultValue="gpt3.5">
@@ -82,10 +109,16 @@ export function App() {
                 Voce podera customizar essa opção em breve
               </span>
             </div>
+
             <Separator />
             <div className="space-y-4">
               <Label>Temperatura</Label>
-              <Slider min={0} max={1} step={0.1}></Slider>
+              <Slider
+               min={0} 
+               max={1}
+               step={0.1}
+               value={[temperature]}
+               onValueChange={value=>setTemperature(value[0])}></Slider>
               <span
                 className="block text-vs text-muted-foreground
               italic leading-relaxed"
@@ -95,7 +128,7 @@ export function App() {
               </span>
             </div>
             <Separator />
-            <Button type="submit" className="w-full">
+            <Button disabled={isLoading} type="submit" className="w-full">
               Executar
             </Button>
           </form>
